@@ -17,16 +17,24 @@ open class ConnectionMaker : IConnectionMaker {
     override fun String.createGet(action: HttpURLConnection.() -> Unit): HttpURLConnection {
         return this.createConnection().apply {
             interceptorList.forEach { it.handleBefore(this) }
-            action.invoke(this)
             requestMethod = "GET"
+            action.invoke(this)
         }.doConnection()
     }
 
     override fun String.createPost(action: HttpURLConnection.() -> Unit): HttpURLConnection {
         return this.createConnection().apply {
             interceptorList.forEach { it.handleBefore(this) }
-            action.invoke(this)
             requestMethod = "POST"
+            action.invoke(this)
+        }.doConnection()
+    }
+
+    override fun String.createMethod(method: String, action: HttpURLConnection.() -> Unit): HttpURLConnection {
+        return this.createConnection().apply {
+            interceptorList.forEach { it.handleBefore(this) }
+            requestMethod = method
+            action.invoke(this)
         }.doConnection()
     }
 

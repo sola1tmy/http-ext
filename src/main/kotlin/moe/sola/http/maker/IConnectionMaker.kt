@@ -15,6 +15,8 @@ interface IConnectionMaker {
 
     fun String.createPost(action: HttpURLConnection.()-> Unit): HttpURLConnection
 
+    fun String.createMethod(method: String, action: HttpURLConnection.() -> Unit): HttpURLConnection
+
     fun addIntercept(vararg interceptor: Interceptor)
 
 }

@@ -20,6 +20,13 @@ fun String.httpPost(action: HttpURLConnection.() -> Unit = {}): HttpURLConnectio
     }
 }
 
+fun String.httpConnection(method: String, action: HttpURLConnection.() -> Unit = {}): HttpURLConnection {
+    with(DefaultMaker) {
+        return createMethod(method, action)
+    }
+}
+
+
 fun HttpURLConnection.headers(vararg pairs: Pair<String, String>) {
     pairs.forEach {
         this.addRequestProperty(it.first, it.second)
