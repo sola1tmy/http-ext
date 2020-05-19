@@ -1,5 +1,9 @@
 package moe.sola.http.interceptor
 
+import moe.sola.http.log
+import moe.sola.http.request.Request
+import moe.sola.http.request.Response
+import java.lang.Exception
 import java.net.HttpURLConnection
 
 /**
@@ -9,6 +13,11 @@ import java.net.HttpURLConnection
  **/
 interface Interceptor {
 
-    fun handleBefore(urlConnection: HttpURLConnection)
+    fun handleBefore(request: Request): Request {
+        return request
+    }
 
+    fun handleAfter(response: Response): Response {
+        return response
+    }
 }

@@ -2,6 +2,8 @@ package moe.sola.http.maker
 
 import moe.sola.http.ext.createConnection
 import moe.sola.http.interceptor.Interceptor
+import moe.sola.http.request.Request
+import moe.sola.http.request.Response
 import java.net.HttpURLConnection
 
 /**
@@ -11,11 +13,11 @@ import java.net.HttpURLConnection
  **/
 interface IConnectionMaker {
 
-    fun String.createGet(action: HttpURLConnection.()-> Unit): HttpURLConnection
+    fun String.createGet(action: Request.()-> Unit): HttpURLConnection
 
-    fun String.createPost(action: HttpURLConnection.()-> Unit): HttpURLConnection
+    fun String.createPost(action: Request.()-> Unit): HttpURLConnection
 
-    fun String.createMethod(method: String, action: HttpURLConnection.() -> Unit): HttpURLConnection
+    fun String.createMethod(method: String, action: Request.() -> Unit): HttpURLConnection
 
     fun addIntercept(vararg interceptor: Interceptor)
 
