@@ -3,6 +3,9 @@ package moe.sola.http.interceptor
 import moe.sola.http.log
 import moe.sola.http.request.Request
 import moe.sola.http.request.Response
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.net.HttpURLConnection
 
 /**
@@ -35,10 +38,12 @@ class LoginInterceptor: Interceptor {
     }
 
     fun Response.printResponse() {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        this.content.copyTo(byteArrayOutputStream)
         log("Response($url) >>>")
         log("code:" + this.responseCode)
         log("message:" + this.responseMessage)
-        log("data:" + this.content.bufferedReader().readText())
+        log("data:" + ByteArrayInputStream(byteArrayOutputStream.toByteArray()).bufferedReader().readText())
         log("<<<")
         log("")
         log("")
