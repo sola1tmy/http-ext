@@ -38,7 +38,7 @@ class LoginInterceptor: Interceptor {
         log("Response($url) >>>")
         log("code:" + this.responseCode)
         log("message:" + this.responseMessage)
-        log("data:" + this.content)
+        log("data:" + this.content.bufferedReader().readText())
         log("<<<")
         log("")
         log("")

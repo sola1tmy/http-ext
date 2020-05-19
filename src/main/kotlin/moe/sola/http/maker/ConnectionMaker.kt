@@ -19,15 +19,15 @@ open class ConnectionMaker : IConnectionMaker {
 
     private var interceptorList: MutableList<Interceptor> = mutableListOf(LoginInterceptor())
 
-    override fun String.createGet(action: Request.() -> Unit): HttpURLConnection {
+    override fun String.createGet(action: Request.() -> Unit): Response {
         return createMethod("GET", action)
     }
 
-    override fun String.createPost(action: Request.() -> Unit): HttpURLConnection {
+    override fun String.createPost(action: Request.() -> Unit): Response {
         return createMethod("POST", action)
     }
 
-    override fun String.createMethod(method: String, action: Request.() -> Unit): HttpURLConnection {
+    override fun String.createMethod(method: String, action: Request.() -> Unit): Response {
         val conection = this.createConnection().apply {
             requestMethod = method
 
@@ -47,13 +47,11 @@ open class ConnectionMaker : IConnectionMaker {
                 this@createMethod,
                 this.responseCode,
                 this.responseMessage,
-                this.inputStream.bufferedReader().readText()
+                this.inputStream
             )
             resp.afterInterceptorsActions()
+            return resp
         }
-
-        return conection
-
     }
 
     private fun Request.beforeInterceptorsActions() {

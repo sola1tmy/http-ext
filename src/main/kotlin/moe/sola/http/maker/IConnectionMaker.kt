@@ -13,11 +13,11 @@ import java.net.HttpURLConnection
  **/
 interface IConnectionMaker {
 
-    fun String.createGet(action: Request.()-> Unit): HttpURLConnection
+    fun String.createGet(action: Request.()-> Unit): Response
 
-    fun String.createPost(action: Request.()-> Unit): HttpURLConnection
+    fun String.createPost(action: Request.()-> Unit): Response
 
-    fun String.createMethod(method: String, action: Request.() -> Unit): HttpURLConnection
+    fun String.createMethod(method: String, action: Request.() -> Unit): Response
 
     fun addIntercept(vararg interceptor: Interceptor)
 

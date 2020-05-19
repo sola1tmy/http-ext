@@ -1,5 +1,6 @@
 package moe.sola.http.result
 
+import moe.sola.http.request.Response
 import java.net.HttpURLConnection
 
 /**
@@ -7,10 +8,10 @@ import java.net.HttpURLConnection
  * @since : 2020/3/5, 周四
  * @description:
  **/
-fun HttpURLConnection.readAsString(): String {
-    return String(this.inputStream.readBytes())
+fun Response.readAsString(): String {
+    return String(this.content.readBytes())
 }
 
-fun <T> HttpURLConnection.readByAdapter(adapter: IResultAdapter<T>): T {
-    return adapter.adapter(this.inputStream)
+fun <T> Response.readByAdapter(adapter: IResultAdapter<T>): T {
+    return adapter.adapter(this.content)
 }
