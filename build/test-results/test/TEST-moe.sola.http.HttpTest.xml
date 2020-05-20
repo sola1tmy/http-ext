@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="moe.sola.http.HttpTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-19T09:18:14" hostname="youhuajiedeMacBook-Pro.local" time="0.181">
+<testsuite name="moe.sola.http.HttpTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-19T09:23:09" hostname="youhuajiedeMacBook-Pro.local" time="0.154">
   <properties/>
-  <testcase name="adapterTest" classname="moe.sola.http.HttpTest" time="0.181"/>
+  <testcase name="adapterTest" classname="moe.sola.http.HttpTest" time="0.154"/>
   <system-out><![CDATA[Request(http://www.baidu.com) >>>
 method:GET
 headers:

@@ -13,7 +13,7 @@ import java.net.HttpURLConnection
  * @since : 2020/5/19, 周二
  * @description:
  **/
-class LoginInterceptor: Interceptor {
+class LoginInterceptor : Interceptor {
 
     override fun handleBefore(request: Request): Request {
         request.printRequest()
@@ -21,8 +21,7 @@ class LoginInterceptor: Interceptor {
     }
 
     override fun handleAfter(response: Response): Response {
-        response.printResponse()
-        return response
+        return response.printResponse()
     }
 
     fun Request.printRequest() {
@@ -37,9 +36,10 @@ class LoginInterceptor: Interceptor {
         log("")
     }
 
-    fun Response.printResponse() {
+    fun Response.printResponse(): Response {
+        val byteArray = this.content.readBytes()
         val byteArrayOutputStream = ByteArrayOutputStream()
-        this.content.copyTo(byteArrayOutputStream)
+        byteArrayOutputStream.write(byteArray)
         log("Response($url) >>>")
         log("code:" + this.responseCode)
         log("message:" + this.responseMessage)
@@ -47,5 +47,8 @@ class LoginInterceptor: Interceptor {
         log("<<<")
         log("")
         log("")
+
+        val newResp = this.copy(content = ByteArrayInputStream(byteArray))
+        return newResp
     }
 }
