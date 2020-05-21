@@ -40,8 +40,12 @@ open class ConnectionMaker : IConnectionMaker {
                 addRequestProperty(it.key, it.value.joinToString(","))
             }
             val paramText = request.params.joinToString("&") { it.key + "=" + it.value }
-            val out = DataOutputStream(outputStream)
-            out.writeBytes(paramText)
+            if (paramText.isNotEmpty()){
+                doOutput = true
+                val out = DataOutputStream(outputStream)
+                out.writeBytes(paramText)
+            }
+
 
 
         }.doConnection()
