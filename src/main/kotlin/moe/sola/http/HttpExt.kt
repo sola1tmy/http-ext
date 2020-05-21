@@ -28,10 +28,3 @@ fun String.httpConnection(method: String, action: Request.() -> Unit = {}): Resp
         return createMethod(method, action)
     }
 }
-
-@Deprecated("Look at Header")
-fun Request.headers(vararg pairs: Pair<String, String>) {
-    pairs.forEach {
-        this.headers.add(Header(it.first, listOf(it.second)))
-    }
-}

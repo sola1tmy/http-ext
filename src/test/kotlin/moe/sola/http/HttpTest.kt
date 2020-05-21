@@ -14,18 +14,18 @@ class HttpTest {
     @Test
     fun httpGetTest() {
         "http://www.baidu.com".httpGet {
-            headers(
-                "header1" to "as"
-            )
+//            headers(
+//                "header1" to "as"
+//            )
         }.readAsString().let { println(it) }
     }
 
     @Test
     fun adapterTest() {
-        "http://www.baidu.com".httpGet {
-            headers(
-                "header1" to "as"
-            )
-        }.readByAdapter(StringAdapter).let { println(it) }
+//        "http://www.baidu.com".httpGet {
+//            headers(
+//                "header1" to "as"
+//            )
+//        }.readByAdapter(StringAdapter).let { println(it) }
     }
 }
