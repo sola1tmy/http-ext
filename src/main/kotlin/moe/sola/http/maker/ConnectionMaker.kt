@@ -8,6 +8,7 @@ import moe.sola.http.request.Header
 import moe.sola.http.request.Param
 import moe.sola.http.request.Request
 import moe.sola.http.request.Response
+import java.io.DataOutputStream
 import java.net.HttpURLConnection
 
 /**
@@ -31,35 +32,42 @@ open class ConnectionMaker : IConnectionMaker {
         val conection = this.createConnection().apply {
             requestMethod = method
 
-            val headers = mutableListOf<Header>()
-            val params = mutableListOf<Param>()
-            val request = Request(this@createMethod, method, headers, params)
+            var request = Request(this@createMethod, method, emptyList(), emptyList())
             action.invoke(request)
 
-
-            request.beforeInterceptorsActions()
+            request = request.beforeInterceptorsActions()
+            request.headers.forEach {
+                addRequestProperty(it.key, it.value.joinToString(","))
+            }
+            val paramText = request.params.joinToString("&") { it.key + "=" + it.value }
+            val out = DataOutputStream(outputStream)
+            out.writeBytes(paramText)
 
 
         }.doConnection()
 
         conection.run {
-            val resp = Response(
+            var resp = Response(
                 this@createMethod,
                 this.responseCode,
                 this.responseMessage,
                 this.inputStream
             )
-            resp.afterInterceptorsActions()
+            resp = resp.afterInterceptorsActions()
             return resp
         }
     }
 
-    private fun Request.beforeInterceptorsActions() {
-        interceptorList.forEach { it.handleBefore(this) }
+    private fun Request.beforeInterceptorsActions(): Request {
+        var request = this
+        interceptorList.forEach { request = it.handleBefore(request) }
+        return request
     }
 
-    private fun Response.afterInterceptorsActions() {
-        interceptorList.forEach { it.handleAfter(this) }
+    private fun Response.afterInterceptorsActions(): Response {
+        var response = this
+        interceptorList.forEach { response = it.handleAfter(response) }
+        return response
     }
 
     override fun addIntercept(vararg interceptor: Interceptor) {

@@ -8,8 +8,8 @@ package moe.sola.http.request
 data class Request(
     val url: String,
     val method: String,
-    val headers: MutableList<Header>,
-    val params: MutableList<Param>
+    val headers: List<Header>,
+    val params: List<Param>
 )
 
 data class Header(
